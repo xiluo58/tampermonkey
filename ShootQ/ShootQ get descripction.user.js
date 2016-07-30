@@ -31,7 +31,6 @@
         return arr;
     }
     function outputResult(){
-        debugger;
         var descriptionString = description.join('\n');
         var nameString = name.replace('&', '+');
         var pos = findNth(nameString, ' ', 3);
