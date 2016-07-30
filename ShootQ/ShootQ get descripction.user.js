@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ShootQ get descripction
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://app.shootq.com/shoots/*
@@ -31,12 +31,29 @@
         return arr;
     }
     function outputResult(){
+        debugger;
         var descriptionString = description.join('\n');
+        var nameString = name.replace('&', '+');
+        var pos = findNth(nameString, ' ', 3);
+        
         window.Shoot = {
-            name: name.replace('&', '+'),
+            name: nameString.substring(0, pos),
             descriptioin: descriptionString
         };
     }
+    
+    function findNth(str, pattern, n){
+        var pos = 0;
+        for(var i = 0; i < n; i++){
+            pos = str.indexOf(pattern, pos + 1);
+            if(pos === -1){
+                return pos;
+            }
+        }
+        return pos;
+        
+    }
+    
     function getDetails(){
         setTimeout(function(){
             var details = $('.orderdetails');
