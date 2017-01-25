@@ -21,6 +21,7 @@
     function normalizeStringArray(arr){
         for(var i = 0; i < arr.length; i++){
             var line = arr[i].trim();
+            line = line.replace(/ +/g, ' ');
             if(line === ''){
                 arr.splice(i, 1);
                 i--;
@@ -36,7 +37,7 @@
         var pos = findNth(nameString, ' ', 3);
         
         window.Shoot = {
-            name: nameString.substring(0, pos),
+            name: pos === -1 ? nameString : nameString.substring(0, pos),
             descriptioin: descriptionString
         };
     }
@@ -72,8 +73,9 @@
 
     function getDescription(){
         var contact = $('#shootrelationships td:nth-of-type(2)').children(":visible").text().split('\n');
-        var info = $("#shootevents td:nth-of-type(2)").text().split('\n');   
-        
+        var info = $("#shootevents tbody:nth-of-type(1) td:nth-of-type(2)").text().split('\n');
+        var tbody2 = $("#shootevents tbody:nth-of-type(2)").text().split('\n');
+        info = info.concat(tbody2);
         normalizeStringArray(contact);
         normalizeStringArray(info);
         console.log('Contact:\n' + contact);
